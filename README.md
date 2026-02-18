@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DocAI
+
+AI-powered document intelligence platform. Upload PDFs, ask questions with RAG-powered chat, and generate structured summaries — all grounded in your actual documents.
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 16 (App Router) · React 19 · TypeScript |
+| Styling | Tailwind CSS v4 · shadcn/ui · Radix UI · Motion |
+| Backend | Supabase (Postgres, Auth, Storage, RLS, RPCs) |
+| AI | OpenAI (gpt-4o, gpt-4o-mini, text-embedding-3-large) |
+| Hosting | Vercel |
+
+## Features
+
+- **PDF Upload** — Drag-and-drop with 10MB limit, content-hash deduplication, automatic processing pipeline
+- **RAG Chat** — Hybrid search (vector + full-text), reciprocal rank fusion, streaming responses with inline citations
+- **7 Summary Types** — From quick overviews (gpt-4o-mini) to legal analysis and meeting minutes (gpt-4o), cached per document
+- **Document Library** — Search, sort, status tracking, PDF viewer (desktop) with mobile download fallback
+- **Admin Dashboard** — Platform-wide stats, document management, AI usage analytics, model breakdown (admin-only)
+- **Security** — Row-level security, rate limiting (Supabase-backed), UUID validation, input sanitization, no error leakage
+- **Auth** — Email sign-up/sign-in via Supabase Auth, protected routes with middleware
+- **Dark Mode** — System-aware theme with manual toggle
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+git clone https://github.com/OfirPatish/DocAI.git
+cd DocAI
+npm install
+cp .env.local.example .env.local   # fill in your keys
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Prerequisites
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Node.js 18+
+- [Supabase](https://supabase.com) project (free tier works)
+- [OpenAI](https://platform.openai.com) API key
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Environment Variables
 
-## Learn More
+Copy `.env.local.example` and fill in your credentials. See [Supabase Setup](./docs/SUPABASE-SETUP.md) for details.
 
-To learn more about Next.js, take a look at the following resources:
+### Database Setup
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Run the migration SQL in Supabase SQL Editor or use the CLI:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npx supabase link --project-ref YOUR_REF
+npx supabase db push
+```
 
-## Deploy on Vercel
+Verify with `supabase/migrations/20240218100000_verify_schema.sql` — passes silently if correct.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Command | Purpose |
+|---------|---------|
+| `npm run dev` | Start dev server |
+| `npm run build` | Production build |
+| `npm run check` | ESLint + TypeScript checks |
+| `npx supabase db push` | Run migrations |
+
+## Documentation
+
+| Doc | Description |
+|-----|-------------|
+| [Architecture](./docs/ARCHITECTURE.md) | Project structure, conventions, API routes |
+| [AI & RAG Pipeline](./docs/AI-PROMPTS.md) | Models, RAG flow, summary types, prompt design |
+| [Supabase Setup](./docs/SUPABASE-SETUP.md) | Database setup, schema, troubleshooting |
+| [OpenAI Usage & Costs](./docs/OPENAI-USAGE.md) | Cost estimates, rate limits, optimization |
+
+## License
+
+[MIT](./LICENSE)
