@@ -25,3 +25,5 @@ Query → Reformulate → Hybrid search (vector + full-text) → Rerank top 8 �
 | Chapter, Core Points, Meeting, Legal | gpt-4o |
 
 Summaries are cached per (document, type). Each type uses a title like "Smart Summary of the PDF File" as the first heading.
+
+**Regenerating:** Selecting the same summary type again (e.g. Smart Summary when Smart Summary is already shown) triggers regeneration instead of serving the cache. Alternatively, use the Regenerate button to refresh the current summary.

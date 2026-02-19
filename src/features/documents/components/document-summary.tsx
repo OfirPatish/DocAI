@@ -97,11 +97,14 @@ export const DocumentSummary = ({
           Choose summary type
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {SUMMARY_TYPES.map((t) => (
+        {SUMMARY_TYPES.map((t) => {
+          const isActiveType = t.id === summaryType;
+          const shouldRegenerate = isActiveType && !!initialSummary;
+          return (
           <DropdownMenuItem
             key={t.id}
             onSelect={() => {
-              queueMicrotask(() => onSummarize(t.id, false));
+              queueMicrotask(() => onSummarize(t.id, shouldRegenerate));
             }}
             className="flex cursor-pointer flex-col items-start gap-1 py-2.5"
           >
@@ -112,7 +115,8 @@ export const DocumentSummary = ({
               {t.description}
             </span>
           </DropdownMenuItem>
-        ))}
+          );
+        })}
       </DropdownMenuContent>
     </DropdownMenu>
   );
