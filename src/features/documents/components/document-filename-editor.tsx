@@ -104,7 +104,7 @@ export const DocumentFilenameEditor = ({
           onChange={(e) => setValue(e.target.value)}
           onKeyDown={handleKeyDown}
           onFocus={(e) => e.target.select()}
-          className="h-8 max-w-[240px] text-sm font-semibold sm:max-w-[300px]"
+          className="h-8 min-w-0 max-w-[160px] text-sm font-semibold sm:max-w-[240px] md:max-w-[300px]"
           aria-label="Edit filename (extension will be .pdf)"
         />
         <Button variant="ghost" size="icon-xs" onClick={handleSave} aria-label="Save" className="text-success hover:bg-success/10">
@@ -119,7 +119,7 @@ export const DocumentFilenameEditor = ({
 
   return (
     <div className="flex min-w-0 items-center gap-1.5">
-      <h1 className="truncate text-base font-bold sm:text-lg" title={displayFilename}>
+      <h1 className="truncate text-sm font-semibold sm:text-base md:font-bold md:text-lg" title={displayFilename}>
         {displayFilename}
       </h1>
       <Tooltip>

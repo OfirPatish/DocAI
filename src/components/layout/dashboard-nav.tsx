@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
 import {
   Tooltip,
   TooltipContent,
@@ -22,7 +21,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { FileText, FolderOpen, Shield, Settings, LogOut } from "lucide-react";
+import { FolderOpen, Shield, Settings, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -34,6 +33,9 @@ const getInitials = (email: string | undefined): string => {
   return email.charAt(0).toUpperCase();
 };
 
+const navWrapperClass =
+  "mx-auto flex h-14 w-full max-w-6xl items-center gap-2 px-4 sm:gap-4 sm:px-6 lg:px-8";
+
 export const DashboardNav = () => {
   const pathname = usePathname();
   const { user, isLoading, signOut } = useAuth();
@@ -43,17 +45,8 @@ export const DashboardNav = () => {
   if (isLoading) {
     return (
       <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="flex h-14 items-center gap-4 px-4 sm:px-6 lg:px-8">
-          <Link
-            href="/dashboard"
-            className="flex items-center gap-2 font-bold"
-            prefetch={false}
-          >
-            <div className="flex size-7 items-center justify-center rounded-lg bg-primary">
-              <FileText className="size-3.5 text-white" aria-hidden />
-            </div>
-            <span className="text-primary font-semibold">DocAI</span>
-          </Link>
+        <div className={navWrapperClass}>
+          <Skeleton className="h-8 w-24" />
           <div className="flex-1" />
           <Skeleton className="h-8 w-8 rounded-full" />
         </div>
@@ -72,25 +65,7 @@ export const DashboardNav = () => {
       )}
       aria-busy={isBusy}
     >
-      <div className="mx-auto flex h-14 items-center gap-2 px-4 sm:gap-4 sm:px-6 lg:px-8">
-        <Link
-          href="/dashboard/documents"
-          className="flex shrink-0 items-center gap-2 font-bold transition-opacity hover:opacity-80"
-          aria-label="DocAI home"
-        >
-          <div className="flex size-7 items-center justify-center rounded-lg bg-primary">
-            <FileText className="size-3.5 text-white" aria-hidden />
-          </div>
-          <span className="hidden text-primary font-semibold sm:inline">
-            DocAI
-          </span>
-        </Link>
-
-        <Separator
-          orientation="vertical"
-          className="mx-1 hidden h-6 sm:block"
-        />
-
+      <div className={navWrapperClass}>
         <nav className="flex items-center gap-0.5" aria-label="Main navigation">
           {navItems.map(({ href, label, icon: Icon }) => {
             const isActive = pathname.startsWith(href);
@@ -111,7 +86,7 @@ export const DashboardNav = () => {
                       aria-current={isActive ? "page" : undefined}
                     >
                       <Icon className="size-4 shrink-0" aria-hidden />
-                      <span className="hidden sm:inline">{label}</span>
+                      <span>{label}</span>
                     </Button>
                   </Link>
                 </TooltipTrigger>

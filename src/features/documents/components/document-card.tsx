@@ -83,13 +83,13 @@ export const DocumentCard = ({
 
   return (
     <>
-      <Card className="group relative overflow-hidden transition-all duration-200 hover:shadow-md hover:border-primary/30 hover:-translate-y-0.5">
+      <Card className="group relative flex-col gap-0 overflow-hidden p-0 transition-[box-shadow,border-color] duration-200 hover:shadow-md hover:border-primary/30">
         <Link
           href={`/dashboard/documents/${id}`}
           prefetch={false}
-          className="flex flex-col"
+          className="flex flex-col outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
         >
-          <div className="relative block aspect-[2/1] w-full shrink-0 overflow-hidden bg-muted">
+          <div className="relative block aspect-[2/1] w-full shrink-0 overflow-hidden bg-card">
             {imageError ? (
               <div className="absolute inset-0 flex items-center justify-center">
                 <FileText className="size-12 text-muted-foreground/50" aria-hidden />
@@ -99,7 +99,8 @@ export const DocumentCard = ({
                 src="/document-placeholder.png"
                 alt=""
                 fill
-                className="object-cover object-center transition-transform duration-200 group-hover:scale-[1.02]"
+                loading="eager"
+                className="object-cover object-center"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 onError={() => setImageError(true)}
               />

@@ -22,12 +22,12 @@ export default async function DocumentsPage() {
     .order("created_at", { ascending: false });
 
   return (
-    <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 sm:gap-10">
-      <header>
-        <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+    <div className="flex w-full flex-col">
+      <header className="mb-6 sm:mb-8">
+        <h1 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
           Documents
         </h1>
-        <p className="mt-1.5 text-sm text-muted-foreground sm:text-base leading-relaxed">
+        <p className="mt-1 text-sm text-muted-foreground">
           Upload, manage, and chat with your PDF documents.
         </p>
       </header>

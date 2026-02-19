@@ -1,77 +1,65 @@
-# DocAI
+# DocAI — AI-Powered Document Intelligence
 
-AI-powered document intelligence platform. Upload PDFs, ask questions with RAG-powered chat, and generate structured summaries — all grounded in your actual documents.
+**Upload PDFs. Ask questions. Get smart summaries.** DocAI turns your documents into a searchable, chat-enabled knowledge base with RAG-powered answers grounded in your files.
+
+## Highlights
+
+- **PDF Upload & Processing** — Drag-and-drop, 10MB limit, content-hash deduplication, automatic extraction and vector indexing
+- **RAG Chat** — Hybrid search (vector + full-text), streaming responses, inline citations, grounded answers
+- **7 Summary Types** — Quick overviews, chapter breakdowns, meeting minutes, legal analysis — each cached and regenerable
+- **Document Library** — Search, sort, status tracking, PDF viewer (desktop) with mobile download
+- **Admin Dashboard** — Platform stats, document management, AI usage analytics (admin-only)
+- **Security** — Supabase RLS, rate limiting, auth-protected routes, dark mode
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
+| Layer | Tech |
+|-------|------|
 | Framework | Next.js 16 (App Router) · React 19 · TypeScript |
-| Styling | Tailwind CSS v4 · shadcn/ui · Radix UI · Motion |
-| Backend | Supabase (Postgres, Auth, Storage, RLS, RPCs) |
+| UI | Tailwind v4 · shadcn/ui · Radix · Motion |
+| Backend | Supabase (Postgres, Auth, Storage, RLS) |
 | AI | OpenAI (gpt-4o, gpt-4o-mini, text-embedding-3-large) |
 | Hosting | Vercel |
 
-## Features
-
-- **PDF Upload** — Drag-and-drop with 10MB limit, content-hash deduplication, automatic processing pipeline
-- **RAG Chat** — Hybrid search (vector + full-text), reciprocal rank fusion, streaming responses with inline citations
-- **7 Summary Types** — From quick overviews (gpt-4o-mini) to legal analysis and meeting minutes (gpt-4o), cached per document
-- **Document Library** — Search, sort, status tracking, PDF viewer (desktop) with mobile download fallback
-- **Admin Dashboard** — Platform-wide stats, document management, AI usage analytics, model breakdown (admin-only)
-- **Security** — Row-level security, rate limiting (Supabase-backed), UUID validation, input sanitization, no error leakage
-- **Auth** — Email sign-up/sign-in via Supabase Auth, protected routes with middleware
-- **Dark Mode** — System-aware theme with manual toggle
-
-## Getting Started
+## Quick Start
 
 ```bash
 git clone https://github.com/OfirPatish/DocAI.git
 cd DocAI
 npm install
-cp .env.local.example .env.local   # fill in your keys
+cp .env.local.example .env.local   # add Supabase + OpenAI keys
 npm run dev
 ```
 
-### Prerequisites
+**Prereqs:** Node 18+, Supabase project, OpenAI API key. See [Supabase Setup](./docs/SUPABASE_SETUP.md).
 
-- Node.js 18+
-- [Supabase](https://supabase.com) project (free tier works)
-- [OpenAI](https://platform.openai.com) API key
+## Project Layout
 
-### Environment Variables
-
-Copy `.env.local.example` and fill in your credentials. See [Supabase Setup](./docs/SUPABASE-SETUP.md) for details.
-
-### Database Setup
-
-Run the migration SQL in Supabase SQL Editor or use the CLI:
-
-```bash
-npx supabase link --project-ref YOUR_REF
-npx supabase db push
 ```
-
-Verify with `supabase/migrations/20240218100000_verify_schema.sql` — passes silently if correct.
+src/
+├── app/          Routes (auth, dashboard, API)
+├── features/     admin, auth, documents, embed, rag
+├── lib/          supabase, openai, pdf, summarize, rate-limit
+└── components/   layout, ui (shadcn)
+```
 
 ## Scripts
 
 | Command | Purpose |
 |---------|---------|
-| `npm run dev` | Start dev server |
+| `npm run dev` | Dev server |
 | `npm run build` | Production build |
-| `npm run check` | ESLint + TypeScript checks |
-| `npx supabase db push` | Run migrations |
+| `npm run check` | ESLint + TypeScript |
 
-## Documentation
+## Docs
 
-| Doc | Description |
-|-----|-------------|
-| [Architecture](./docs/ARCHITECTURE.md) | Project structure, conventions, API routes |
-| [AI & RAG Pipeline](./docs/AI-PROMPTS.md) | Models, RAG flow, summary types, prompt design |
-| [Supabase Setup](./docs/SUPABASE-SETUP.md) | Database setup, schema, troubleshooting |
-| [OpenAI Usage & Costs](./docs/OPENAI-USAGE.md) | Cost estimates, rate limits, optimization |
+| Doc | Content |
+|-----|---------|
+| [Supabase Setup](./docs/SUPABASE_SETUP.md) | Keys, auth, schema, troubleshooting |
+| [Architecture](./docs/ARCHITECTURE.md) | Structure, API routes, conventions |
+| [AI & RAG](./docs/AI-PROMPTS.md) | Models, RAG flow, summary types |
+| [OpenAI Costs](./docs/OPENAI-USAGE.md) | Usage, rates, optimization |
 
 ## License
 
-[MIT](./LICENSE)
+MIT

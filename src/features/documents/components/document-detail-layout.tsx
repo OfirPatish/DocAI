@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, FileText } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useUpload } from "@/providers/upload-provider";
 import { DocumentActions } from "./document-actions";
@@ -32,62 +32,54 @@ export const DocumentDetailLayout = ({
   const { isSummarizing } = useUpload();
 
   return (
-    <div className="flex h-full min-h-0 flex-col overflow-hidden bg-muted/20">
+    <div className="flex h-full min-h-0 flex-col overflow-hidden bg-background">
       <header
         className={cn(
-          "flex shrink-0 items-center justify-between gap-3 border-b border-border bg-background px-4 py-3 shadow-sm sm:px-6 sm:py-4",
+          "flex shrink-0 flex-nowrap items-center justify-between gap-2 border-b border-border bg-background px-4 py-3 sm:gap-3 sm:px-5 sm:py-3.5",
           isSummarizing && "pointer-events-none select-none opacity-60"
         )}
         aria-busy={isSummarizing}
       >
-        <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-4">
-          <Link href="/dashboard/documents" prefetch={false}>
+        <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3">
+          <Link href="/dashboard/documents" prefetch={false} className="shrink-0">
             <Button
               variant="ghost"
               size="icon"
-              className="size-9 shrink-0 rounded-lg transition-colors"
+              className="size-9 shrink-0 rounded-lg"
               aria-label="Back to documents"
             >
               <ArrowLeft className="size-4 shrink-0" aria-hidden />
             </Button>
           </Link>
-          <div className="min-w-0 flex-1">
+          <div className="min-w-0 flex-1 overflow-hidden">
             <DocumentFilenameEditor documentId={doc.id} filename={doc.filename} />
           </div>
         </div>
-        <DocumentActions
-          documentId={doc.id}
-          status={doc.status}
-          disabled={doc.status === "processing"}
-        />
+        <div className="shrink-0">
+          <DocumentActions
+            documentId={doc.id}
+            status={doc.status}
+            disabled={doc.status === "processing"}
+          />
+        </div>
       </header>
 
-      <div className="grid min-h-0 flex-1 grid-cols-1 gap-0 lg:grid-cols-2">
+      <div className="grid min-h-0 flex-1 grid-cols-1 gap-0 lg:grid-cols-[2fr_3fr]">
         <div
           className={cn(
-            "relative hidden min-h-0 flex-col overflow-hidden lg:flex",
+            "relative hidden min-h-0 flex-1 overflow-hidden border-border lg:block lg:border-r",
             isSummarizing && "pointer-events-none select-none opacity-60"
           )}
           aria-busy={isSummarizing}
         >
-          <div className="flex shrink-0 items-center gap-2 border-b border-border bg-background px-4 py-2.5 lg:border-r">
-            <FileText className="size-4 text-muted-foreground" aria-hidden />
-            <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              PDF Preview
-            </span>
-          </div>
-          <div className="relative min-h-0 flex-1 overflow-hidden bg-muted/30 p-3">
-            <div className="size-full overflow-hidden rounded-lg border border-border bg-background shadow-sm">
-              <ErrorBoundary
-                fallbackTitle="PDF viewer error"
-                fallbackDescription="Failed to load the PDF viewer."
-              >
-                <DocumentPdfViewer documentId={doc.id} filename={doc.filename} />
-              </ErrorBoundary>
-            </div>
-          </div>
+          <ErrorBoundary
+            fallbackTitle="PDF viewer error"
+            fallbackDescription="Failed to load the PDF viewer."
+          >
+            <DocumentPdfViewer documentId={doc.id} filename={doc.filename} />
+          </ErrorBoundary>
         </div>
-        <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-background">
+        <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden">
           <ErrorBoundary
             fallbackTitle="Content error"
             fallbackDescription="Failed to load document content."

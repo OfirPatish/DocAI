@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { motion } from "motion/react";
 import { Search, ArrowDownNarrowWide, FolderOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useUpload } from "@/providers/upload-provider";
@@ -85,7 +86,7 @@ export const DocumentLibrary = ({ documents }: DocumentLibraryProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-8 sm:gap-10">
+    <div className="flex flex-col gap-6 sm:gap-8">
       <section aria-labelledby="upload-heading">
         <h2 id="upload-heading" className="sr-only">
           Upload document
@@ -101,16 +102,16 @@ export const DocumentLibrary = ({ documents }: DocumentLibraryProps) => {
           isUploading && "pointer-events-none select-none opacity-60"
         )}
       >
-        <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-3">
+        <div className="mb-4 flex flex-col gap-3 sm:mb-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-2.5">
             <h2
               id="documents-list-heading"
-              className="text-lg font-semibold tracking-tight text-foreground sm:text-xl"
+              className="text-base font-semibold tracking-tight text-foreground sm:text-lg"
             >
               Your Documents
             </h2>
             {localDocuments.length > 0 && (
-              <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary ring-1 ring-primary/10">
+              <span className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
                 {localDocuments.length}
               </span>
             )}
@@ -193,15 +194,24 @@ export const DocumentLibrary = ({ documents }: DocumentLibraryProps) => {
           </div>
         ) : (
           <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {filteredAndSorted.map((doc) => (
-              <li key={doc.id}>
+            {filteredAndSorted.map((doc, index) => (
+              <motion.li
+                key={doc.id}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.3,
+                  delay: Math.min(index * 0.04, 0.2),
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
                 <DocumentCard
                   id={doc.id}
                   filename={doc.filename}
                   createdAt={doc.created_at}
                   onDeleted={handleDocumentDeleted}
                 />
-              </li>
+              </motion.li>
             ))}
           </ul>
         )}

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ModeToggle } from "@/components/mode-toggle";
 import { Separator } from "@/components/ui/separator";
 import { FadeIn } from "@/components/ui/fade-in";
 import {
@@ -82,56 +81,6 @@ const trustPoints = [
 export default function HomePage() {
   return (
     <div className="flex min-h-screen min-w-0 flex-col overflow-x-hidden bg-background">
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
-      >
-        Skip to main content
-      </a>
-
-      {/* Header */}
-      <header className="sticky top-0 z-40 glass">
-        <div className="mx-auto flex h-14 min-w-0 max-w-6xl items-center justify-between gap-2 px-4 sm:h-16 sm:px-6 lg:px-8">
-          <Link
-            href="/"
-            className="flex shrink-0 items-center gap-2 font-bold text-lg tracking-tight transition-colors hover:opacity-80"
-            aria-label="DocAI home"
-          >
-            <div className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-primary sm:size-8">
-              <FileText
-                className="size-3.5 text-white sm:size-4"
-                aria-hidden
-              />
-            </div>
-            <span className="text-primary font-semibold">DocAI</span>
-          </Link>
-          <nav
-            className="flex shrink-0 items-center gap-1 sm:gap-3"
-            aria-label="Main navigation"
-          >
-            <ModeToggle />
-            <Link href="/sign-in">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-9 min-w-9 touch-manipulation px-2 sm:px-3"
-              >
-                Sign in
-              </Button>
-            </Link>
-            <Link href="/sign-up">
-              <Button
-                size="sm"
-                className="h-9 min-w-9 touch-manipulation gap-1.5 px-2 sm:px-4"
-              >
-                Get started
-                <ArrowRight className="size-3.5 shrink-0" aria-hidden />
-              </Button>
-            </Link>
-          </nav>
-        </div>
-      </header>
-
       <main id="main-content" className="flex-1" role="main">
         {/* Hero */}
         <section className="relative overflow-hidden bg-muted/30">
@@ -214,7 +163,7 @@ export default function HomePage() {
               {features.map((feature, i) => (
                 <FadeIn key={feature.title} delay={i * 0.1}>
                   <div
-                    className={`group flex min-w-0 flex-col gap-4 rounded-2xl border border-border/50 bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${feature.hoverBorder} sm:p-8`}
+                    className={`group flex min-w-0 flex-col gap-4 rounded-2xl border border-border/50 bg-card p-6 shadow-sm transition-shadow duration-300 hover:shadow-lg ${feature.hoverBorder} sm:p-8`}
                   >
                     <div
                       className={`inline-flex size-12 items-center justify-center rounded-xl ${feature.bg} ${feature.hoverBg} transition-colors`}

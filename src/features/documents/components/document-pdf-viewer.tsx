@@ -40,15 +40,15 @@ export const DocumentPdfViewer = ({
   if (error) {
     return (
       <div
-        className="flex size-full min-h-[160px] flex-col items-center justify-center gap-3 p-6 text-center"
+        className="flex size-full min-h-[180px] flex-col items-center justify-center gap-4 rounded-xl bg-muted/20 p-8 text-center"
         role="alert"
       >
-        <div className="flex size-14 items-center justify-center rounded-2xl bg-destructive/10">
+        <div className="flex size-14 items-center justify-center rounded-2xl bg-destructive/10 ring-1 ring-destructive/20">
           <FileQuestion className="size-7 text-destructive" aria-hidden />
         </div>
-        <div>
-          <p className="font-medium">Failed to load PDF</p>
-          <p className="mt-1 text-sm text-muted-foreground">{error}</p>
+        <div className="space-y-1">
+          <p className="font-semibold text-foreground">Failed to load PDF</p>
+          <p className="text-sm text-muted-foreground">{error}</p>
         </div>
       </div>
     );
@@ -57,7 +57,7 @@ export const DocumentPdfViewer = ({
   if (!pdfUrl) {
     return (
       <Skeleton
-        className="size-full min-h-0 flex-1"
+        className="size-full min-h-0 flex-1 rounded-lg"
         aria-busy="true"
         aria-label="Loading PDF"
       />
@@ -66,17 +66,17 @@ export const DocumentPdfViewer = ({
 
   if (!isDesktop) {
     return (
-      <div className="flex size-full flex-col items-center justify-center gap-4 p-8 text-center">
-        <div className="flex size-14 items-center justify-center rounded-2xl bg-primary/10">
-          <FileQuestion className="size-7 text-primary" aria-hidden />
+      <div className="flex size-full flex-col items-center justify-center gap-5 rounded-xl bg-muted/20 p-10 text-center">
+        <div className="flex size-16 items-center justify-center rounded-2xl bg-primary/5 ring-1 ring-primary/10">
+          <FileQuestion className="size-8 text-primary/70" aria-hidden />
         </div>
-        <div className="space-y-1">
-          <p className="font-medium text-foreground text-sm">PDF preview</p>
-          <p className="text-xs text-muted-foreground leading-relaxed">
+        <div className="space-y-2">
+          <p className="font-semibold text-foreground">PDF preview</p>
+          <p className="text-sm text-muted-foreground leading-relaxed max-w-[240px]">
             Available on desktop. Download to view on this device.
           </p>
         </div>
-        <Button asChild variant="outline" size="sm" className="gap-2">
+        <Button asChild variant="outline" size="sm" className="gap-2 rounded-lg">
           <a
             href={pdfUrl}
             download={filename}

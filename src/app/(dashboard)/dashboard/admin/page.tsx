@@ -131,19 +131,21 @@ export default async function AdminPage() {
   const { stats, documents, usage } = await fetchAdminData();
 
   return (
-    <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 sm:gap-8">
-      <header>
-        <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+    <div className="flex w-full flex-col">
+      <header className="mb-6 sm:mb-8">
+        <h1 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
           Admin Dashboard
         </h1>
-        <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground sm:text-base">
+        <p className="mt-1 text-sm text-muted-foreground">
           System-wide overview of documents, AI usage, and platform health.
         </p>
       </header>
 
-      <AdminStatsCards stats={stats} />
+      <div className="mb-6 sm:mb-8">
+        <AdminStatsCards stats={stats} />
+      </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="mb-6 grid gap-6 sm:mb-8 lg:grid-cols-2">
         <AdminRecentActivity documents={documents.slice(0, 6)} />
         <AdminModelBreakdown
           modelBreakdown={stats.modelBreakdown}
@@ -152,7 +154,7 @@ export default async function AdminPage() {
       </div>
 
       <Tabs defaultValue="documents" className="w-full">
-        <TabsList className="mb-4">
+        <TabsList className="mb-4 h-auto flex-wrap gap-1 p-1">
           <TabsTrigger value="documents" className="gap-2">
             <FileText className="size-4" aria-hidden />
             Documents ({stats.totalDocuments})

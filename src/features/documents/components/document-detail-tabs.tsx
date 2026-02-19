@@ -116,28 +116,28 @@ export const DocumentDetailTabs = ({
           </Card>
         </div>
       )}
-      <div className="flex min-h-11 shrink-0 items-center border-b border-border px-4 pt-3 pb-0">
+      <div className="flex min-h-11 shrink-0 items-center border-b border-border px-3 pt-3 pb-0 sm:px-4">
         <TabsList variant="line" className="h-auto min-h-9 w-auto gap-0 p-0">
           <TabsTrigger
             value="summary"
-            className="gap-2 pb-3 text-sm font-medium"
+            className="gap-1.5 px-3 pb-3 text-sm font-medium data-[state=active]:text-foreground sm:gap-2 sm:px-4"
             disabled={isSummarizingFromProvider}
           >
             <FileText className="size-4 shrink-0" aria-hidden />
-            Summary
+            <span>Summary</span>
           </TabsTrigger>
           <TabsTrigger
             value="chat"
-            className="gap-2 pb-3 text-sm font-medium"
+            className="gap-1.5 px-3 pb-3 text-sm font-medium data-[state=active]:text-foreground sm:gap-2 sm:px-4"
             disabled={isSummarizingFromProvider}
           >
             <MessageSquare className="size-4 shrink-0" aria-hidden />
-            AI Chat
+            <span>AI Chat</span>
           </TabsTrigger>
         </TabsList>
       </div>
-      <TabsContent value="summary" className="flex-1 min-h-0 overflow-hidden p-4">
-        <ScrollArea className="h-full pr-3">
+      <TabsContent value="summary" className="flex-1 min-h-0 overflow-hidden p-3 sm:p-5">
+        <ScrollArea className="h-full pr-2 sm:pr-3">
           <DocumentSummary
             initialSummary={summary}
             canSummarize={canSummarize}
@@ -147,7 +147,7 @@ export const DocumentDetailTabs = ({
           />
         </ScrollArea>
       </TabsContent>
-      <TabsContent value="chat" className="flex-1 min-h-0 overflow-hidden p-4">
+      <TabsContent value="chat" className="flex-1 min-h-0 overflow-hidden p-3 sm:p-5">
         <DocumentChat documentId={documentId} disabled={disabled} />
       </TabsContent>
     </Tabs>

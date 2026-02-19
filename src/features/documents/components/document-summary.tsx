@@ -12,7 +12,6 @@ import {
   Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   DropdownMenu,
@@ -77,8 +76,6 @@ export const DocumentSummary = ({
     );
   }
 
-  const typeLabel =
-    SUMMARY_TYPES.find((t) => t.id === summaryType)?.label ?? "Summary";
 
   const summarizeDropdown = (
     <DropdownMenu>
@@ -95,7 +92,7 @@ export const DocumentSummary = ({
           <ChevronDown className="size-3 opacity-70" aria-hidden />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-72 rounded-xl">
+      <DropdownMenuContent align="center" className="w-72 rounded-xl">
         <DropdownMenuLabel className="text-xs font-normal text-muted-foreground">
           Choose summary type
         </DropdownMenuLabel>
@@ -141,15 +138,7 @@ export const DocumentSummary = ({
     <div className="space-y-5">
       {initialSummary && !isSummarizing && (
         <div className="space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <Badge
-              variant="secondary"
-              className="gap-1.5 px-2.5 py-1 text-xs font-medium"
-            >
-              <Sparkles className="size-3.5 shrink-0" aria-hidden />
-              {typeLabel}
-            </Badge>
-            <div className="flex items-center gap-1.5">
+          <div className="flex flex-wrap items-center justify-center gap-1.5 sm:justify-end">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button
@@ -170,6 +159,7 @@ export const DocumentSummary = ({
                   {copied ? "Copied!" : "Copy summary"}
                 </TooltipContent>
               </Tooltip>
+              {summarizeDropdown}
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button
@@ -178,18 +168,16 @@ export const DocumentSummary = ({
                     onClick={() => onSummarize(summaryType, true)}
                     disabled={!canSummarize || isSummarizing}
                     className="size-8 text-muted-foreground hover:text-foreground"
-                    aria-label={`Regenerate ${typeLabel}`}
+                    aria-label="Regenerate summary"
                   >
                     <RefreshCw className="size-4" aria-hidden />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>Regenerate</TooltipContent>
               </Tooltip>
-              {summarizeDropdown}
-            </div>
           </div>
           <Card className="overflow-hidden shadow-sm">
-            <CardContent className="p-6">
+            <CardContent className="p-4 sm:p-6">
               <div className="text-sm leading-relaxed text-foreground/85 [&_h3]:mt-5 [&_h3]:mb-2 [&_h3]:font-bold [&_h3]:text-foreground [&_h3]:text-base [&_h3:first-child]:mt-0 [&_h4]:mt-3 [&_h4]:mb-1.5 [&_h4]:font-semibold [&_h4]:text-foreground [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_li]:my-0.5 [&_strong]:font-semibold [&_strong]:text-foreground [&_p]:my-2 [&_p:last-child]:mb-0 [&_hr]:my-5 [&_hr]:border-border">
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}

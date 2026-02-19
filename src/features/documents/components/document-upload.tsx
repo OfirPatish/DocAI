@@ -188,8 +188,8 @@ export const DocumentUpload = ({ className, onUploadingChange }: DocumentUploadP
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         className={cn(
-          "relative flex min-h-[160px] cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:min-h-[200px]",
-          isDragging && "border-primary bg-primary/5 shadow-lg shadow-primary/10 scale-[1.005]",
+          "relative flex min-h-[160px] cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed outline-none transition-[border-color,background-color,transform,box-shadow] duration-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:min-h-[200px]",
+          isDragging && "border-primary bg-primary/5 shadow-lg shadow-primary/10",
           !isDragging && "border-border/70 bg-card/50 hover:border-primary/40 hover:bg-primary/[0.02]",
           isUploading && "pointer-events-none cursor-not-allowed opacity-70"
         )}

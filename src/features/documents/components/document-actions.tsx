@@ -73,24 +73,30 @@ export const DocumentActions = ({
         size="sm"
         onClick={handleProcess}
         disabled={disabled || isProcessing}
-        className="h-9 gap-2 shrink-0 rounded-lg font-medium shadow-sm"
-        aria-label="Process document"
+        className="h-9 shrink-0 gap-1.5 rounded-lg px-2.5 font-medium shadow-sm sm:gap-2 sm:px-3"
+        aria-label={isProcessing ? "Processing document" : "Process document"}
       >
         {isProcessing ? (
-          <Loader2 className="size-4 animate-spin" aria-hidden />
+          <Loader2 className="size-4 animate-spin shrink-0" aria-hidden />
         ) : (
-          <Play className="size-4" aria-hidden />
+          <Play className="size-4 shrink-0" aria-hidden />
         )}
-        {isProcessing ? "Processing..." : "Process"}
+        <span className="hidden sm:inline">{isProcessing ? "Processing..." : "Process"}</span>
       </Button>
     );
   }
 
   if (isProcessingStatus) {
     return (
-      <Button size="sm" variant="secondary" disabled className="h-9 gap-2 shrink-0 rounded-lg font-medium">
-        <Loader2 className="size-4 animate-spin" aria-hidden />
-        Processing...
+      <Button
+        size="sm"
+        variant="secondary"
+        disabled
+        className="h-9 shrink-0 gap-1.5 rounded-lg px-2.5 font-medium sm:gap-2 sm:px-3"
+        aria-label="Processing document"
+      >
+        <Loader2 className="size-4 animate-spin shrink-0" aria-hidden />
+        <span className="hidden sm:inline">Processing...</span>
       </Button>
     );
   }

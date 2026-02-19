@@ -42,6 +42,17 @@ export const SUMMARY_TYPES = [
 
 export type SummaryTypeId = (typeof SUMMARY_TYPES)[number]["id"];
 
+/** Title the AI must use as the first ## heading in the output. */
+export const SUMMARY_HEADERS: Record<SummaryTypeId, string> = {
+  summary: "Summary of the PDF File",
+  smart: "Smart Summary of the PDF File",
+  chapters: "Chapter Summary of the PDF File",
+  core: "Core Points of the PDF File",
+  insights: "Key Insights of the PDF File",
+  meeting: "Meeting Minutes of the PDF File",
+  legal: "Legal Summary of the PDF File",
+};
+
 const BASE_CONSTRAINTS = `### Constraints
 - Only include information that appears in the document.
 - Do not invent, infer, or assume beyond the source text.
@@ -49,6 +60,7 @@ const BASE_CONSTRAINTS = `### Constraints
 - If the document contains OCR noise or placeholders, omit those.`;
 
 export const getSummarySystemPrompt = (typeId: SummaryTypeId): string => {
+  const mainHeading = SUMMARY_HEADERS[typeId];
   const prompts: Record<SummaryTypeId, string> = {
     summary: `### Role
 You are an expert document summarizer. Your summaries are detailed, well-structured, and presented in a professional format that is easy to read and navigate.
@@ -59,7 +71,7 @@ Produce a thorough summary that covers every major topic, section, and area. Pre
 ### Format (follow this structure)
 1. **Opening** — Start with a brief courteous intro (e.g., "Below is a detailed, well-structured overview of the document, based strictly on the content provided.") followed by ---
 
-2. **Main heading** — Use ## for the main title (e.g., "## Overview of the Document")
+2. **Main heading** — Use ## for the main title. The FIRST ## heading in your output MUST be exactly: "## ${mainHeading}"
 
 3. **Numbered sections** — Use ### for major sections:
    - "### 1. Document Type and Purpose" — What kind of document it is and why it exists
@@ -88,7 +100,7 @@ Summarize all key points clearly. Use a hierarchical structure (##, ###, ####) w
 
 ### Format
 - Start with a brief courteous opener and ---
-- Use ## for the main heading (e.g., "## Key Points from the Document")
+- Use ## for the main heading. The FIRST ## heading in your output MUST be exactly: "## ${mainHeading}"
 - Use ### for major sections; use #### a., b., c. when listing subsections
 - Under each subsection: bullet points with 1–2 sentences of detail (not just single words)
 - Use markdown tables when comparing items or presenting structured data
@@ -112,7 +124,7 @@ Summarize deeply by table of contents and chapters. Preserve the document's hier
 
 ### Format
 - Start with a brief courteous opener and ---
-- Use ## for the main heading (e.g., "## Chapter-by-Chapter Summary")
+- Use ## for the main heading. The FIRST ## heading in your output MUST be exactly: "## ${mainHeading}"
 - Use ### for each chapter/section (e.g., "### 1. Introduction", "### 2. Key Concepts")
 - Use #### for subsections within a chapter when needed
 - Under each heading: bullet points with 1–2 sentences of detail
@@ -137,7 +149,7 @@ Summarize core points, key conclusions, and important details. Focus on what mat
 
 ### Format
 - Start with a brief courteous opener and ---
-- Use ## for the main heading (e.g., "## Executive Summary")
+- Use ## for the main heading. The FIRST ## heading in your output MUST be exactly: "## ${mainHeading}"
 - Use ### for sections: Key Conclusions, Critical Details, Recommendations, Important Dates/Requirements
 - Use bullet points with 1–2 sentences under each; use **bold** for critical terms
 - Use markdown tables for key data (Metric | Value, Deadline | Details, Requirement | Status)
@@ -162,7 +174,7 @@ Capture highlights and main takeaways. Ideal for quick review or catching up. Be
 
 ### Format
 - Start with a brief courteous opener and ---
-- Use ## Key Insights as the main heading
+- Use ## for the main heading. The FIRST ## heading in your output MUST be exactly: "## ${mainHeading}"
 - Use ### for grouped themes when there are multiple categories (e.g., "### 1. Safety & Compliance", "### 2. Features & Capabilities")
 - Use bullet points with 1–2 sentences each; use **bold** for key terms
 - Use a markdown table when insights compare items (Topic | Insight | Importance)
@@ -186,7 +198,7 @@ Summarize meeting minutes so non-attendees quickly understand outcomes, decision
 
 ### Format
 - Start with a brief courteous opener and ---
-- Use ## Meeting Summary as the main heading
+- Use ## for the main heading. The FIRST ## heading in your output MUST be exactly: "## ${mainHeading}"
 - Use ### for sections: Key Decisions, Main Topics Discussed, Action Items
 - Use bullet points with 1–2 sentences under each section; include names when relevant
 - Use a markdown table for action items: Owner | Task | Deadline | Status
@@ -210,7 +222,7 @@ Summarize complex legal documents, highlighting key details, potential risks, ob
 
 ### Format
 - Start with a brief courteous opener and ---
-- Use ## Document Summary as the main heading
+- Use ## for the main heading. The FIRST ## heading in your output MUST be exactly: "## ${mainHeading}"
 - Use ### for sections: Key Terms, Parties & Obligations, Risks, Important Dates, Termination
 - Use bullet points with 1–2 sentences under each; use **bold** for critical language; quote key phrases when helpful
 - Use markdown tables: Party | Role | Obligation; Term | Details | Risk Level; Date | Event

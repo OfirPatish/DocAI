@@ -41,7 +41,7 @@ export const useAdmin = () => {
     return () => {
       cancelled = true;
     };
-  }, [user, authLoading]);
+  }, [user?.id, authLoading]);
 
   return { isAdmin, isChecking };
 };

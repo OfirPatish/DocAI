@@ -254,7 +254,7 @@ export const DocumentChat = ({
     <div className="flex size-full min-h-0 flex-col gap-4">
       <Card className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
         <ScrollArea className="min-h-0 flex-1" viewportRef={scrollViewportRef}>
-          <CardContent className="p-5">
+          <CardContent className="p-3 sm:p-5">
             {messages.length === 0 && !streamingContent && (
               <div className="flex min-h-[200px] flex-col items-center justify-center gap-5 py-10 text-center">
                 <div className="flex size-14 items-center justify-center rounded-2xl bg-primary/10 shadow-sm">
@@ -393,13 +393,13 @@ export const DocumentChat = ({
           {error}
         </p>
       )}
-      <form onSubmit={handleSubmit} className="flex shrink-0 items-center gap-2">
+      <form onSubmit={handleSubmit} className="flex min-w-0 shrink-0 items-center gap-1.5 sm:gap-2">
         <Input
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask a question about this document..."
+          placeholder="Ask a question..."
           disabled={isLoading || disabled}
-          className="h-11 flex-1 rounded-xl border-border/80"
+          className="h-11 min-w-0 flex-1 rounded-xl border-border/80"
           aria-label="Question"
         />
         {messages.length > 0 && !isLoading && (
