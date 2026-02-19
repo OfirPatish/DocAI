@@ -4,10 +4,10 @@
 
 ```
 src/
-├── app/         Auth, dashboard, API routes
-├── features/    admin, auth, documents, embed, rag
-├── lib/         supabase, openai, pdf, summarize, rate-limit
-└── components/  layout, ui
+├── app/           Auth, dashboard (documents, admin, settings), API routes
+├── features/      admin, auth, documents, embed, rag
+├── components/    layout (dashboard-sidebar, dashboard-layout), ui (shadcn)
+└── lib/           supabase, openai, pdf, summarize, rate-limit
 ```
 
 ## API Routes

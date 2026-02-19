@@ -7,8 +7,10 @@
 - **PDF Upload & Processing** — Drag-and-drop, 10MB limit, content-hash deduplication, automatic extraction and vector indexing
 - **RAG Chat** — Hybrid search (vector + full-text), streaming responses, inline citations, grounded answers
 - **7 Summary Types** — Quick overviews, chapter breakdowns, meeting minutes, legal analysis — each cached and regenerable
-- **Document Library** — Search, sort, status tracking, PDF viewer (desktop) with mobile download
+- **Document Library** — Search, sort, status tracking, inline PDF viewer (desktop), mobile download
+- **Settings** — Profile, password change, account, theme & privacy info
 - **Admin Dashboard** — Platform stats, document management, AI usage analytics (admin-only)
+- **Sidebar Layout** — Left navigation (Documents, Settings, Admin), theme toggle, responsive
 - **Security** — Supabase RLS, rate limiting, auth-protected routes, dark mode
 
 ## Tech Stack
