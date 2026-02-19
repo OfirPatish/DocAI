@@ -22,8 +22,8 @@ export default async function DocumentsPage() {
     .order("created_at", { ascending: false });
 
   return (
-    <div className="flex w-full flex-col">
-      <header className="mb-6 sm:mb-8">
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 sm:gap-8">
+      <header>
         <h1 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
           Documents
         </h1>

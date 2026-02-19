@@ -14,7 +14,9 @@ src/
 
 | Route | Method | Purpose |
 |-------|--------|---------|
-| `/api/documents/upload` | POST | Upload PDF |
+| `/api/documents/prepare-upload` | POST | Get upload slot (docId, storagePath) — no file, bypasses Vercel 4.5MB limit |
+| `/api/documents/confirm-upload` | POST | Create document record after client direct-upload to Supabase Storage |
+| `/api/documents/upload` | POST | Legacy server-side upload (≤4.5MB only on Vercel) |
 | `/api/documents/[id]` | PATCH/DELETE | Rename, delete |
 | `/api/documents/[id]/process` | POST | Extract, chunk, embed |
 | `/api/documents/[id]/chat` | POST | RAG chat (streaming) |

@@ -102,7 +102,7 @@ export const DocumentLibrary = ({ documents }: DocumentLibraryProps) => {
           isUploading && "pointer-events-none select-none opacity-60"
         )}
       >
-        <div className="mb-4 flex flex-col gap-3 sm:mb-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2.5">
             <h2
               id="documents-list-heading"

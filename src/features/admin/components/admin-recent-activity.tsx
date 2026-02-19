@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { FadeIn } from "@/components/ui/fade-in";
 import { FileText, Clock, AlertCircle, Loader2, CheckCircle2 } from "lucide-react";
 import type { AdminDocument } from "../types";

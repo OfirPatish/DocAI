@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { CheckCircle2, CloudUpload, Loader2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { createClient } from "@/lib/supabase/client";
 
 const PDF_MIME = "application/pdf";
 const MAX_SIZE_MB = 10;
@@ -17,6 +18,12 @@ const validateFile = (file: File): string | null => {
     return `File must be under ${MAX_SIZE_MB}MB.`;
   }
   return null;
+};
+
+const computeContentHash = async (buffer: ArrayBuffer): Promise<string> => {
+  const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
 };
 
 interface DocumentUploadProps {
@@ -50,32 +57,73 @@ export const DocumentUpload = ({ className, onUploadingChange }: DocumentUploadP
       onUploadingChange?.(true);
 
       try {
-        const formData = new FormData();
-        formData.append("file", file);
-
-        const uploadRes = await fetch("/api/documents/upload", {
+        // Step 1: Get upload slot from API (no file — bypasses Vercel 4.5MB limit)
+        const prepareRes = await fetch("/api/documents/prepare-upload", {
           method: "POST",
-          body: formData,
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ filename: file.name, fileSize: file.size }),
         });
 
-        const uploadData = (await uploadRes.json().catch(() => ({}))) as {
-          document?: { id?: string; filename?: string };
+        const prepareData = (await prepareRes.json().catch(() => ({}))) as {
+          docId?: string;
+          storagePath?: string;
           error?: string;
         };
 
-        if (!uploadRes.ok) {
-          const msg = uploadData.error ?? "Upload failed. Please try again.";
+        if (!prepareRes.ok) {
+          const msg = prepareData.error ?? "Upload failed. Please try again.";
           setError(msg);
           setSuccess(null);
           return;
         }
 
-        const docId = uploadData.document?.id;
-        const filename = uploadData.document?.filename ?? "Document";
+        const { docId, storagePath } = prepareData;
+        if (!docId || !storagePath) {
+          setError("Upload failed. Please try again.");
+          setSuccess(null);
+          return;
+        }
 
-        if (!docId) {
-          setSuccess(`${filename} uploaded successfully.`);
-          router.refresh();
+        // Step 2: Upload directly to Supabase Storage (bypasses Vercel)
+        const supabase = createClient();
+        const fileBuffer = await file.arrayBuffer();
+
+        const { error: uploadError } = await supabase.storage
+          .from("documents")
+          .upload(storagePath, fileBuffer, {
+            contentType: PDF_MIME,
+            upsert: false,
+          });
+
+        if (uploadError) {
+          setError(uploadError.message ?? "Storage upload failed. Please try again.");
+          setSuccess(null);
+          return;
+        }
+
+        // Step 3: Confirm upload — create document record (metadata only, no file)
+        const contentHash = await computeContentHash(fileBuffer);
+
+        const confirmRes = await fetch("/api/documents/confirm-upload", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            docId,
+            filename: file.name,
+            fileSize: file.size,
+            contentHash,
+          }),
+        });
+
+        const confirmData = (await confirmRes.json().catch(() => ({}))) as {
+          document?: { id?: string; filename?: string };
+          error?: string;
+        };
+
+        if (!confirmRes.ok) {
+          const msg = confirmData.error ?? "Upload failed. Please try again.";
+          setError(msg);
+          setSuccess(null);
           return;
         }
 

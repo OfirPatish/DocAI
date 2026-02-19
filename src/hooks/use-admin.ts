@@ -16,13 +16,17 @@ export const useAdmin = () => {
     if (authLoading) return;
 
     if (!user) {
-      setIsAdmin(false);
-      setIsChecking(false);
+      queueMicrotask(() => {
+        setIsAdmin(false);
+        setIsChecking(false);
+      });
       return;
     }
 
     let cancelled = false;
-    setIsChecking(true);
+    queueMicrotask(() => {
+      if (!cancelled) setIsChecking(true);
+    });
 
     fetch("/api/admin/check")
       .then((res) => res.json())
@@ -41,7 +45,7 @@ export const useAdmin = () => {
     return () => {
       cancelled = true;
     };
-  }, [user?.id, authLoading]);
+  }, [user, authLoading]);
 
   return { isAdmin, isChecking };
 };
