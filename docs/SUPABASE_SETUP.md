@@ -12,8 +12,8 @@
 
 **Authentication → URL Configuration**
 
-- Site URL: `https://doc-ai-flame.vercel.app` (prod)
-- Redirect URLs: add `https://doc-ai-flame.vercel.app/auth/callback`, `http://localhost:3000/auth/callback`, `http://localhost:3000/**`
+- Site URL: `https://opdev-docai.vercel.app` (prod)
+- Redirect URLs: add `https://opdev-docai.vercel.app/auth/callback`, `http://localhost:3000/auth/callback`, `http://localhost:3000/**`
 
 ## 3. Storage
 

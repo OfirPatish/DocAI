@@ -1,41 +1,40 @@
-# DocAI — AI-Powered Document Intelligence
+# DocAI
 
-**Upload PDFs. Ask questions. Get smart summaries.** DocAI turns your documents into a searchable, chat-enabled knowledge base with RAG-powered answers grounded in your files.
+AI-powered document intelligence. Upload PDFs, ask questions, get smart summaries. RAG-powered answers grounded in your files. Next.js, Supabase, OpenAI.
+
+**Live:** [opdev-docai.vercel.app](https://opdev-docai.vercel.app)  
+**GitHub:** [github.com/OfirPatish/DocAI](https://github.com/OfirPatish/DocAI)
 
 ## Highlights
 
-- **PDF Upload & Processing** — Drag-and-drop, 10MB limit, content-hash deduplication, automatic extraction and vector indexing
-- **RAG Chat** — Hybrid search (vector + full-text), streaming responses, inline citations, grounded answers
-- **7 Summary Types** — Quick overviews, chapter breakdowns, meeting minutes, legal analysis — each cached and regenerable
-- **Document Library** — Search, sort, status tracking, inline PDF viewer (desktop), mobile download
-- **Settings** — Profile, password change, account, theme & privacy info
-- **Admin Dashboard** — Platform stats, document management, AI usage analytics (admin-only)
-- **Sidebar Layout** — Left navigation (Documents, Settings, Admin), theme toggle, responsive
+- **PDF upload & processing** — Drag-and-drop, 10MB limit, content-hash deduplication, vector indexing
+- **RAG chat** — Hybrid search, streaming responses, inline citations, grounded answers
+- **7 summary types** — Overviews, chapters, meeting minutes, legal analysis — cached and regenerable
+- **Document library** — Search, sort, status, inline PDF viewer, mobile download
+- **Admin dashboard** — Platform stats, document management, AI usage (admin-only)
+- **Sidebar layout** — Documents, Settings, Admin; theme toggle, responsive
 - **Security** — Supabase RLS, rate limiting, auth-protected routes, dark mode
 
-## Tech Stack
+## Stack
 
-| Layer | Tech |
-|-------|------|
-| Framework | Next.js 16 (App Router) · React 19 · TypeScript |
-| UI | Tailwind v4 · shadcn/ui · Radix · Motion |
-| Backend | Supabase (Postgres, Auth, Storage, RLS) |
-| AI | OpenAI (gpt-4o, gpt-4o-mini, text-embedding-3-large) |
-| Hosting | Vercel |
+Next.js 16 · React 19 · TypeScript · Tailwind v4 · shadcn/ui · Radix · Motion · Supabase · OpenAI
 
-## Quick Start
+## Quick start
 
-```bash
-git clone https://github.com/OfirPatish/DocAI.git
-cd DocAI
-npm install
-cp .env.local.example .env.local   # add Supabase + OpenAI keys
-npm run dev
-```
+1. **Clone & install** — `git clone https://github.com/OfirPatish/DocAI.git && cd DocAI && npm install`
+2. **Env** — `cp .env.local.example .env.local` (add Supabase + OpenAI keys)
+3. **Supabase** — Node 18+, Supabase project, OpenAI key. See [docs/SUPABASE_SETUP.md](docs/SUPABASE_SETUP.md)
+4. **Run** — `npm run dev` → [http://localhost:3000](http://localhost:3000)
 
-**Prereqs:** Node 18+, Supabase project, OpenAI API key. See [Supabase Setup](./docs/SUPABASE_SETUP.md).
+## Commands
 
-## Project Layout
+| Command | Description |
+| ------- | ----------- |
+| `npm run dev` | Dev server |
+| `npm run build` | Production build |
+| `npm run check` | ESLint + TypeScript |
+
+## Project structure
 
 ```
 src/
@@ -45,23 +44,15 @@ src/
 └── components/   layout, ui (shadcn)
 ```
 
-## Scripts
-
-| Command | Purpose |
-|---------|---------|
-| `npm run dev` | Dev server |
-| `npm run build` | Production build |
-| `npm run check` | ESLint + TypeScript |
-
 ## Docs
 
-| Doc | Content |
-|-----|---------|
-| [Supabase Setup](./docs/SUPABASE_SETUP.md) | Keys, auth, schema, troubleshooting |
-| [Architecture](./docs/ARCHITECTURE.md) | Structure, API routes, conventions |
-| [AI & RAG](./docs/AI-PROMPTS.md) | Models, RAG flow, summary types |
-| [OpenAI Costs](./docs/OPENAI-USAGE.md) | Usage, rates, optimization |
+| Doc | Purpose |
+| --- | ------- |
+| [docs/SUPABASE_SETUP.md](docs/SUPABASE_SETUP.md) | Keys, auth, schema, troubleshooting |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Structure, API routes, conventions |
+| [docs/AI-PROMPTS.md](docs/AI-PROMPTS.md) | Models, RAG flow, summary types |
+| [docs/OPENAI-USAGE.md](docs/OPENAI-USAGE.md) | Usage, rates, optimization |
 
-## License
+---
 
-MIT
+**License:** MIT
